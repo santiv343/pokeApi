@@ -1,11 +1,15 @@
+import { Route, Routes } from "react-router";
 import "./App.css";
 import Home from "./components/Home";
-// import Pagination from "./components/Pagination";
+import Detail from "./components/Detail";
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <Routes>
+        <Route element={<Home />} path="/" />
+        <Route element={<Detail />} path="/pokemon/:id" />
+      </Routes>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
+import { Link } from "react-router-dom";
 
 function Card({ url }) {
   const [data, setData] = useState(null);
@@ -23,7 +24,7 @@ function Card({ url }) {
       {!data ? (
         <Loader />
       ) : (
-        <>
+        <Link to={`pokemon/${data.id}`}>
           <img
             width={150}
             height={150}
@@ -31,7 +32,7 @@ function Card({ url }) {
             alt="img"
           />
           <h4 style={{ textTransform: "capitalize" }}>{data.name}</h4>
-        </>
+        </Link>
       )}
     </div>
   );
