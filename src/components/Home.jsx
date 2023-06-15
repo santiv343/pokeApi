@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import Pagination from "./Pagination";
+import { useSearchParams } from "react-router-dom";
+import { PAGE_PARAM } from "../utils/constants";
 
 function chunk(array, chunkSize) {
   const chunkedArray = [];
@@ -14,10 +16,11 @@ function chunk(array, chunkSize) {
 function Home() {
   const perPage = 10;
 
+  const [searchParams] = useSearchParams();
   const [pokemons, setPokemons] = useState(null);
   const [pokemonsToShow, setPokemonsToShow] = useState([]);
-  const [page, setPage] = useState(0);
 
+  const page = searchParams.get(PAGE_PARAM);
   const totalPages = pokemons?.length / perPage;
 
   useEffect(() => {
@@ -31,8 +34,6 @@ function Home() {
       setPokemonsToShow(chunk(pokemons, perPage));
     }
   }, [pokemons]);
-
-  console.log({ pokemons });
 
   return (
     <div
@@ -54,11 +55,11 @@ function Home() {
           alignItems: "center",
         }}
       >
-        {pokemonsToShow?.[page]?.map((pokemon) => (
-          <Card url={pokemon.url} />
+        {pokemonsToShow?.[page - 1]?.map((pokemon) => (
+          <Card key={pokemon.id} url={pokemon.url} />
         ))}
       </div>
-      <Pagination currentPage={page} pages={totalPages} setPage={setPage} />
+      <Pagination pages={totalPages} />
     </div>
   );
 }
