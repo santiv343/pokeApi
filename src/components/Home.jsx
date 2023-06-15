@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import { useSearchParams } from "react-router-dom";
-import { PAGE_PARAM } from "../utils/constants";
+import { PAGE_PARAM, POKEMONS_PER_PAGE } from "../utils/constants";
 
 function chunk(array, chunkSize) {
   const chunkedArray = [];
@@ -14,14 +14,12 @@ function chunk(array, chunkSize) {
 }
 
 function Home() {
-  const perPage = 10;
-
   const [searchParams] = useSearchParams();
   const [pokemons, setPokemons] = useState(null);
   const [pokemonsToShow, setPokemonsToShow] = useState([]);
 
   const page = searchParams.get(PAGE_PARAM);
-  const totalPages = pokemons?.length / perPage;
+  const totalPages = pokemons?.length / POKEMONS_PER_PAGE;
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=50")
@@ -31,7 +29,7 @@ function Home() {
 
   useEffect(() => {
     if (pokemons) {
-      setPokemonsToShow(chunk(pokemons, perPage));
+      setPokemonsToShow(chunk(pokemons, POKEMONS_PER_PAGE));
     }
   }, [pokemons]);
 
