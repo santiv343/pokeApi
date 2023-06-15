@@ -10,7 +10,6 @@ function Card({ url }) {
       .then((data) => setData(data));
   }, [url]);
 
-  // console.log({ data });
 
   return (
     <div
