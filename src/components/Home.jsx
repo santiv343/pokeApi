@@ -14,12 +14,19 @@ function chunk(array, chunkSize) {
 }
 
 function Home() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [pokemons, setPokemons] = useState(null);
   const [pokemonsToShow, setPokemonsToShow] = useState([]);
 
   const page = searchParams.get(PAGE_PARAM);
   const totalPages = pokemons?.length / POKEMONS_PER_PAGE;
+
+  useEffect(() => {
+    if (!searchParams.get(PAGE_PARAM)) {
+      searchParams.set(PAGE_PARAM, 1);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=50")
