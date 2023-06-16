@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { PAGE_PARAM } from "../utils/constants";
+import PaginationPokeball from "./Pagination/PaginationPokeball";
 
 function Pagination({ pages }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,33 +16,71 @@ function Pagination({ pages }) {
     let buttons = [];
     for (let i = 1; i <= pages; i++) {
       buttons.push(
-        <button
-          key={`button${i}`}
-          style={{
-            margin: "0px 8px",
-            padding: "8px",
-            backgroundColor: page === i ? "red" : "inherit",
-          }}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </button>
+        page === i ? (
+          <PaginationPokeball
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </PaginationPokeball>
+        ) : (
+          <button
+            key={`button${i}`}
+            style={{
+              cursor: "pointer",
+              margin: "0px 8px",
+              width: "40px",
+              height: "40px",
+              padding: "8px",
+              backgroundColor: page === i ? "red" : "inherit",
+              borderRadius: "20px",
+            }}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </button>
+        )
       );
     }
     return buttons;
   };
 
   return (
-    <div style={{ display: "flex", margin: "0 auto", padding: "20px 0" }}>
-      <button disabled={page === 1} onClick={() => handlePageChange(page - 1)}>
-        Back
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "0 auto",
+        padding: "20px 0",
+      }}
+    >
+      <button
+        disabled={page === 1}
+        onClick={() => handlePageChange(page - 1)}
+        style={{
+          width: "40px",
+          height: "40px",
+          padding: "8px",
+          borderRadius: "20px",
+        }}
+      >
+        <div>{`<`}</div>
       </button>
       {getPageButtons()}
       <button
         disabled={page === pages}
         onClick={() => handlePageChange(page + 1)}
+        style={{
+          width: "40px",
+          height: "40px",
+          padding: "8px",
+          borderRadius: "20px",
+        }}
       >
-        Next
+        {`>`}
       </button>
     </div>
   );

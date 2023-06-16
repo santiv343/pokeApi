@@ -33,7 +33,7 @@ function Home() {
   }, [searchParams, setSearchParams]);
 
   useEffect(() => {
-    fetch(getPokeApiUrl())
+    fetch(getPokeApiUrl(100))
       .then((response) => response.json())
       .then((data) => setPokemons(data.results));
   }, []);
